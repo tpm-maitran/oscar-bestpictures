@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import requests
 from bs4 import BeautifulSoup as bs
 import re
@@ -11,7 +5,6 @@ import re
 def get_rt(url, headers):
     
     response = requests.get(url, headers=headers)
-    soup = bs(response.text, 'html.parser')
     
     release_year = ''
     rt_score = ''
@@ -20,6 +13,7 @@ def get_rt(url, headers):
     audience_votes = ''   
     
     if response.status_code == 200:
+        soup = bs(response.text, 'html.parser')
         
         # release year
         try:
@@ -58,4 +52,3 @@ def get_rt(url, headers):
                 audience_votes = ''
                 
     return release_year, rt_score, rt_votes, audience_score, audience_votes
-

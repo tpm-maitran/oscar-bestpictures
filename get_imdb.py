@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import requests
 from bs4 import BeautifulSoup as bs
 
@@ -17,25 +11,36 @@ def get_imdb(imdb_id, headers):
     try:
         release_year = soup.find('span', class_='titlereference-title-year').find('a').text.strip()
     except:
-        release_year = None
+        release_year = ''
     
     # film rating
     try:
         rated = soup.find('ul', class_='ipl-inline-list').find('li').text.strip()
     except:
-        rated = None
+        rated = ''
+        
+    # budget
+    try:
+        budget = soup.find('td', string='Budget').find_next_sibling('td').text.strip().split()[0]
+    except:
+        budget = ''
+        
+    #language
+    try:
+        language = soup.find('td', string='Language').find_next_sibling('td').find('a').text.strip()
+    except:
+        language = ''
     
     # imdb rating
     try:
         imdb_rating = soup.find('span', class_='ipl-rating-star__rating').text.strip()
     except:
-        imdb_rating = None
+        imdb_rating = ''
     
     # number of imdb votes
     try:
         imdb_votes = soup.find('span', class_='ipl-rating-star__total-votes').text.strip('()')
     except:
-        imdb_votes = None
+        imdb_votes = ''
         
-    return release_year, rated, imdb_rating, imdb_votes
-
+    return release_year, rated, budget, language, imdb_rating, imdb_votes

@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import requests
 from bs4 import BeautifulSoup as bs
 import re
@@ -11,13 +5,13 @@ import re
 def get_meta(url, headers):
     
     response = requests.get(url, headers=headers)
-    soup = bs(response.text, 'html.parser')
     
     metascore = ''
     meta_votes = ''
     release_year = ''
     
     if response.status_code == 200:
+        soup = bs(response.text, 'html.parser')
         
         # metascore
         try:
@@ -39,4 +33,3 @@ def get_meta(url, headers):
             release_year = ''
             
     return metascore, meta_votes, release_year
-
