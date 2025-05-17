@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import requests
 from bs4 import BeautifulSoup as bs
 
@@ -17,6 +11,7 @@ def get_tn(url, headers):
     studio = ''
     country = ''
     runtime = ''
+    release_year = ''
 
     if response.status_code == 200:
         soup = bs(response.text, 'html.parser')
@@ -70,6 +65,11 @@ def get_tn(url, headers):
             runtime = b_tag.find_next('td').text.strip()
         except:
             runtime = ''
+            
+        # release year
+        try:
+            release_year = soup.find('h1').text.split('(')[-1].strip(')')
+        except:
+            release_year = ''
 
-    return domestic, international, worldwide, genre, studio, country, runtime
-
+    return domestic, international, worldwide, genre, studio, country, runtime, release_year
